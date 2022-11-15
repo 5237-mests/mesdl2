@@ -1,7 +1,7 @@
 #include <SDL2/SDL.h>
 #include <stdio.h>
 
-int main()
+int main(void)
 {
   if (SDL_Init(SDL_INIT_VIDEO) < 0)
   {
@@ -32,4 +32,6 @@ int main()
   SDL_UpdateWindowSurface(window);
 
   SDL_Delay(5000);
+
+  return 0;
 }
