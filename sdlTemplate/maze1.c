@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include "SDL2/SDL.h"
-#define mapWidth 24
-#define mapHeight 24
+#define mapWidth 16
+#define mapHeight 16
 
 SDL_Window *window;
 SDL_Renderer *renderer;
@@ -11,30 +11,22 @@ float px = 300, py = 300;
 
 int worldMap[mapWidth][mapHeight]=
 {
-  {1,1,1,1,1,1,1,1,1,1,5,1,1,1,1,1,1,1,1,1,1,1,1,1},
-  {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-  {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-  {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-  {1,0,0,0,0,0,2,2,2,2,2,0,0,0,0,3,0,3,0,3,0,0,0,1},
-  {1,0,0,0,0,0,2,0,0,0,2,0,0,0,0,0,0,0,0,0,0,0,0,1},
-  {1,0,0,0,0,0,2,0,0,0,2,0,0,0,0,3,0,0,0,3,0,0,0,1},
-  {1,0,0,0,0,0,2,0,0,0,2,0,0,0,0,0,0,0,0,0,0,0,0,1},
-  {1,0,0,0,0,0,2,2,0,2,2,0,0,0,0,3,0,3,0,3,0,0,0,1},
-  {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-  {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-  {1,0,0,0,0,0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,0,1},
-  {1,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,1,0,1},
-  {1,0,1,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,1,0,1},
-  {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,1},
-  {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,1},
-  {1,0,0,4,4,4,4,4,4,0,0,0,0,0,0,0,0,0,0,0,0,1,0,1},
-  {1,0,0,4,0,0,0,0,4,0,0,0,0,0,0,0,0,0,0,0,0,1,0,1},
-  {1,0,0,0,0,0,5,0,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-  {1,0,0,4,0,0,0,0,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-  {1,0,0,4,4,4,4,4,4,0,0,0,0,0,0,0,0,1,0,0,0,0,0,1},
-  {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,1},
-  {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,1},
-  {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1}
+  {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},
+  {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+  {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+  {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+  {1,0,0,0,0,0,0,3,0,3,0,3,0,0,0,1},
+  {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+  {1,0,0,0,0,0,0,3,0,0,0,3,0,0,0,1},
+  {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+  {1,0,0,0,0,0,0,3,0,3,0,3,0,0,0,1},
+  {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+  {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+  {1,0,0,1,1,1,1,1,1,1,1,1,1,1,0,1},
+  {1,0,0,0,0,0,0,0,0,0,0,0,0,1,0,1},
+  {1,0,1,0,0,0,0,0,0,0,0,0,0,0,0,1},
+  {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+  {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1}
 };
 
 void
@@ -46,15 +38,15 @@ DrawWorld(SDL_Renderer * renderer)
     /* Get the Size of drawing surface */
     SDL_RenderGetViewport(renderer, &darea);
 
-    for (int row = 0 ; row < 24; row++) {
+    for (int row = 0 ; row < 16; row++) {
         // column = row%2;
-        for (int column = 0 ; column < 24; column++) {
+        for (int column = 0 ; column < 16; column++) {
             if(worldMap[row][column] != 0 ){
               x = column;
-              SDL_SetRenderDrawColor(renderer, 0xFF, 0xFF, 0xFF, 0xFF); //wall 
+              SDL_SetRenderDrawColor(renderer, 0x99, 0x9F, 0xFF, 0xFF); //wall 
 
-              rect.w = 600/24;
-              rect.h = 600/24;
+              rect.w = 512/16;
+              rect.h = 512/16;
               rect.x = x * rect.w;
               rect.y = row * rect.h;
               
@@ -64,43 +56,14 @@ DrawWorld(SDL_Renderer * renderer)
     }
 
     SDL_SetRenderDrawColor(renderer, 100, 100, 100, SDL_ALPHA_OPAQUE);
-        for (int i = 1; i <= 24; i++){
-            int j = 25*i;
-            int s = 25*i;
-            SDL_RenderDrawLine(renderer, j, 0, j,600);
-            SDL_RenderDrawLine(renderer, 0, s, 600,s);
+        for (int i = 1; i <= 16; i++){
+            int j = 32*i;
+            int s = 32*i;
+            SDL_RenderDrawLine(renderer, j, 0, j,512);
+            SDL_RenderDrawLine(renderer, 0, s, 512,s);
             SDL_RenderPresent(renderer);
 
         }
-}
-
-void
-PlayerPosition()
-{
-  //Player position
-  if (SDL_KEYDOWN == e.type)
-  {  
-      if (SDLK_LEFT == e.key.keysym.sym)
-      {
-          px -= 10;
-      }
-      else if (SDLK_RIGHT == e.key.keysym.sym)
-      {
-          px += 10;
-      }
-      else if (SDLK_DOWN == e.key.keysym.sym)
-      {
-          py += 10;
-      }
-      else if (SDLK_UP == e.key.keysym.sym)
-      {
-          py -= 10;
-      }
-  }
-  if (px < 0) px = 30;
-  if (py < 0) py = 30;
-  if (px >= 575) px = 575;
-  if (py >= 575) py = 575;
 }
 
 void
@@ -125,10 +88,10 @@ player(SDL_Renderer * renderer){
           py -= 10;
       }
   }
-  if (px <= 25) px = 26;
-  if (py <= 25) py = 26;
-  if (px >= 575) px = 569;
-  if (py >= 575) py = 569;
+  if (px <= 32) px = 33;
+  if (py <= 32) py = 33;
+  if (px >= 472) px = 472;
+  if (py >= 472) py = 472;
   SDL_SetRenderDrawColor(renderer, 0, 0, 0, SDL_ALPHA_OPAQUE);SDL_RenderClear(renderer);
 
   SDL_SetRenderDrawColor(renderer, 0xFF, 0xFF, 0xFF, 0xFF);
@@ -138,7 +101,7 @@ player(SDL_Renderer * renderer){
    position.y = py;
 
   SDL_RenderFillRect(renderer, &position);
-}
+} 
 
 void
 loop()
@@ -203,7 +166,7 @@ main(int argc, char *argv[])
     }
 
     /* Create window and renderer for given surface */
-    window = SDL_CreateWindow("Chess Board", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, 600, 600, 0);
+    window = SDL_CreateWindow("Maze", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, 512, 512, 0);
     if (!window) {
         SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "Window creation fail : %s\n",SDL_GetError());
         return 1;
