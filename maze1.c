@@ -12,48 +12,48 @@ int done;
 float px = 300, py = 300, pdx, pdy, pa = 45;
 
 int worldMap[mapWidth][mapHeight] = {
-{1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
-{1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
-{1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
-{1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
-{1, 0, 0, 0, 0, 0, 0, 3, 0, 3, 0, 3, 0, 0, 0, 1},
-{1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
-{1, 0, 0, 0, 0, 0, 0, 3, 0, 0, 0, 3, 0, 0, 0, 1},
-{1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
-{1, 0, 0, 0, 0, 0, 0, 3, 0, 3, 0, 3, 0, 0, 0, 1},
-{1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
-{1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
-{1, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1},
-{1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1},
-{1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
-{1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
-{1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1}};
+    {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
+    {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
+    {1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
+    {1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
+    {1, 0, 0, 0, 0, 0, 0, 3, 0, 3, 0, 3, 0, 0, 0, 1},
+    {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
+    {1, 0, 0, 0, 0, 0, 0, 3, 0, 0, 0, 3, 0, 0, 0, 1},
+    {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
+    {1, 0, 0, 0, 0, 0, 0, 3, 0, 3, 0, 3, 0, 0, 0, 1},
+    {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
+    {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
+    {1, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1},
+    {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1},
+    {1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
+    {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
+    {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1}};
 
 void DrawWorld(SDL_Renderer *renderer)
 {
-int x = 0;
-SDL_Rect rect, darea;
+    int x = 0;
+    SDL_Rect rect, darea;
 
-/* Get the Size of drawing surface */
-SDL_RenderGetViewport(renderer, &darea);
+    /* Get the Size of drawing surface */
+    SDL_RenderGetViewport(renderer, &darea);
 
-for (int row = 0; row < 16; row++)
-{
-    for (int column = 0; column < 16; column++)
+    for (int row = 0; row < 16; row++)
     {
-        if (worldMap[row][column] != 0)
+        for (int column = 0; column < 16; column++)
         {
-            x = column;
-            SDL_SetRenderDrawColor(renderer, 0x99, 0x9F, 0xFF, 0xFF); // wall
+            if (worldMap[row][column] != 0)
+            {
+                x = column;
+                SDL_SetRenderDrawColor(renderer, 0x99, 0x9F, 0xFF, 0xFF); // wall
 
-            rect.w = 512 / 16;
-            rect.h = 512 / 16;
-            rect.x = x * rect.w;
-            rect.y = row * rect.h;
-            SDL_RenderFillRect(renderer, &rect);
-            //  if (rect.x == px) px = rect.x;
-            //  if (rect.y == py) py = rect.y;
-        }
+                rect.w = 512 / 16;
+                rect.h = 512 / 16;
+                rect.x = x * rect.w;
+                rect.y = row * rect.h;
+                SDL_RenderFillRect(renderer, &rect);
+                //  if (rect.x == px) px = rect.x;
+                //  if (rect.y == py) py = rect.y;
+            }
         }
     }
     // Grid
@@ -114,7 +114,6 @@ void player(SDL_Renderer *renderer)
     {
         px = px + 0.00001;
         py = py + 0.01;
-        // if (px < )
     }
     else
     {
@@ -196,7 +195,7 @@ int main(int argc, char *argv[])
     if (SDL_Init(SDL_INIT_VIDEO) != 0)
     {
         SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "SDL_Init fail : %s\n", SDL_GetError());
-        return 1;
+        return (1);
     }
 
     /* Create window and renderer for given surface */
@@ -204,14 +203,14 @@ int main(int argc, char *argv[])
     if (!window)
     {
         SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "Window creation fail : %s\n", SDL_GetError());
-        return 1;
+        return (1);
     }
     surface = SDL_GetWindowSurface(window);
     renderer = SDL_CreateSoftwareRenderer(surface);
     if (!renderer)
     {
         SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "Render creation for surface fail : %s\n", SDL_GetError());
-        return 1;
+        return (1);
     }
 
     /* Clear the rendering surface with the specified color */
@@ -229,5 +228,5 @@ int main(int argc, char *argv[])
     }
 
     SDL_Quit();
-    return 0;
+    return (0);
 }
