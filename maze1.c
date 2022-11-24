@@ -54,7 +54,7 @@ for (int row = 0; row < 16; row++)
         }
     }
 }
-// Grid
+/*Grid*/ 
 SDL_SetRenderDrawColor(renderer, 100, 100, 100, SDL_ALPHA_OPAQUE);
 for (int i = 1; i <= 16; i++)
 {
@@ -64,7 +64,7 @@ for (int i = 1; i <= 16; i++)
     SDL_RenderDrawLine(renderer, 0, s, 512, s);
     SDL_RenderPresent(renderer);
 }
-// //player positionLine
+/*player positionLine*/
 SDL_SetRenderDrawColor(renderer, 0, 255, 0, SDL_ALPHA_OPAQUE);
 SDL_RenderDrawLine(renderer, px, py, px + pdx * 80, py + pdy * 80);
 SDL_RenderPresent(renderer);
@@ -117,12 +117,13 @@ void player(SDL_Renderer *renderer)
     {
         ;
     }
-    /*
+/*
   if (px <= 32) px = 33;
   if (py <= 32) py = 33;
   if (px >= 472) px = 472;
   if (py >= 472) py = 472;
-  if (rect.x == px ) */
+  if (rect.x == px )
+*/
     SDL_SetRenderDrawColor(renderer, 0, 0, 0, SDL_ALPHA_OPAQUE);
     SDL_RenderClear(renderer);
 
@@ -135,9 +136,8 @@ void player(SDL_Renderer *renderer)
     SDL_RenderFillRect(renderer, &position);
 }
 
-void loop()
+void loop(void)
 {
-    // SDL_Event e;
     while (SDL_PollEvent(&e))
     {
         if (e.type == SDL_QUIT)
@@ -151,7 +151,6 @@ void loop()
             done = 1;
             return;
         }
-        // start
         if (SDL_KEYDOWN == e.type)
         {
             if (SDLK_LEFT == e.key.keysym.sym)
@@ -171,10 +170,8 @@ void loop()
                 py -= 10;
             }
         }
-        // end
 
         DrawWorld(renderer);
-        // player(renderer);
 
         /* Got everything on rendering surface,
            now Update the drawing image on window screen */
