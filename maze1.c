@@ -12,49 +12,48 @@ int done;
 float px = 300, py = 300, pdx, pdy, pa = 45;
 
 int worldMap[mapWidth][mapHeight] = {
-    {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
-    {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
-    {1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
-    {1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
-    {1, 0, 0, 0, 0, 0, 0, 3, 0, 3, 0, 3, 0, 0, 0, 1},
-    {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
-    {1, 0, 0, 0, 0, 0, 0, 3, 0, 0, 0, 3, 0, 0, 0, 1},
-    {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
-    {1, 0, 0, 0, 0, 0, 0, 3, 0, 3, 0, 3, 0, 0, 0, 1},
-    {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
-    {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
-    {1, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1},
-    {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1},
-    {1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
-    {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
-    {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1}};
+{1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
+{1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
+{1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
+{1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
+{1, 0, 0, 0, 0, 0, 0, 3, 0, 3, 0, 3, 0, 0, 0, 1},
+{1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
+{1, 0, 0, 0, 0, 0, 0, 3, 0, 0, 0, 3, 0, 0, 0, 1},
+{1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
+{1, 0, 0, 0, 0, 0, 0, 3, 0, 3, 0, 3, 0, 0, 0, 1},
+{1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
+{1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
+{1, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1},
+{1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1},
+{1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
+{1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
+{1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1}};
 
 void DrawWorld(SDL_Renderer *renderer)
 {
-    int x = 0;
-    SDL_Rect rect, darea;
+int x = 0;
+SDL_Rect rect, darea;
 
-    /* Get the Size of drawing surface */
-    SDL_RenderGetViewport(renderer, &darea);
+/* Get the Size of drawing surface */
+SDL_RenderGetViewport(renderer, &darea);
 
-    for (int row = 0; row < 16; row++)
+for (int row = 0; row < 16; row++)
+{
+    for (int column = 0; column < 16; column++)
     {
-        // column = row%2;
-        for (int column = 0; column < 16; column++)
+        if (worldMap[row][column] != 0)
         {
-            if (worldMap[row][column] != 0)
-            {
-                x = column;
-                SDL_SetRenderDrawColor(renderer, 0x99, 0x9F, 0xFF, 0xFF); // wall
+            x = column;
+            SDL_SetRenderDrawColor(renderer, 0x99, 0x9F, 0xFF, 0xFF); // wall
 
-                rect.w = 512 / 16;
-                rect.h = 512 / 16;
-                rect.x = x * rect.w;
-                rect.y = row * rect.h;
-                SDL_RenderFillRect(renderer, &rect);
-                //  if (rect.x == px) px = rect.x;
-                //  if (rect.y == py) py = rect.y;
-            }
+            rect.w = 512 / 16;
+            rect.h = 512 / 16;
+            rect.x = x * rect.w;
+            rect.y = row * rect.h;
+            SDL_RenderFillRect(renderer, &rect);
+            //  if (rect.x == px) px = rect.x;
+            //  if (rect.y == py) py = rect.y;
+        }
         }
     }
     // Grid
