@@ -11,8 +11,8 @@
 # main3: untextured.c
 # 	gcc -I src/include -L src/lib -o main3 untextured.c -lmingw32 -lSDL2main -lSDL2  
 
-op: maze1.c
-	gcc -I src/include -L src/lib -o op maze1.c -lmingw32 -lSDL2main -lSDL2  
+#op: maze1.c
+#	gcc -I src/include -L src/lib -o op maze1.c -lmingw32 -lSDL2main -lSDL2  
 	
 # op: tod.c
 # 	gcc -I src/include -L src/lib -o op tod.c -lmingw32 -lSDL2main -lSDL2  
@@ -30,4 +30,5 @@ op: maze1.c
 
 # op: final.c
 # 	gcc -I src/include -L src/lib -o op final.c -lmingw32 -lSDL2main -lSDL2  
-	
+opp: maze1.c
+	gcc -o opp maze1.c -lSDL2 -lm -ldl 	

@@ -112,6 +112,7 @@ player(SDL_Renderer * renderer){
   } else {
     ;
   }
+  
 //   if (px <= 32) px = 33;
 //   if (py <= 32) py = 33;
 //   if (px >= 472) px = 472;
