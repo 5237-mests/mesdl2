@@ -9,10 +9,9 @@ SDL_Window *window;
 SDL_Renderer *renderer;
 SDL_Event e;
 int done;
-float px = 300, py = 300, pdx, pdy, pa=45; 
+float px = 300, py = 300, pdx, pdy, pa = 45;
 
-int worldMap[mapWidth][mapHeight]=
-{
+int worldMap[mapWidth][mapHeight] = {
   {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},
   {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
   {1,0,1,0,0,0,0,0,0,0,0,0,0,0,0,1},
@@ -112,13 +111,13 @@ player(SDL_Renderer * renderer){
   } else {
     ;
   }
-  
-//   if (px <= 32) px = 33;
-//   if (py <= 32) py = 33;
-//   if (px >= 472) px = 472;
-//   if (py >= 472) py = 472;
-//   if (rect.x == px )
-  SDL_SetRenderDrawColor(renderer, 0, 0, 0, SDL_ALPHA_OPAQUE);SDL_RenderClear(renderer);
+  /*
+if (px <= 32) px = 33;
+if (py <= 32) py = 33;
+if (px >= 472) px = 472;
+if (py >= 472) py = 472;
+if (rect.x == px ) */
+SDL_SetRenderDrawColor(renderer, 0, 0, 0, SDL_ALPHA_OPAQUE);SDL_RenderClear(renderer);
 
   SDL_SetRenderDrawColor(renderer, 0xFF, 0xFF, 0xFF, 0xFF);
    position.w = 8;
