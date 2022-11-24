@@ -51,8 +51,6 @@ for (int row = 0; row < 16; row++)
             rect.x = x * rect.w;
             rect.y = row * rect.h;
             SDL_RenderFillRect(renderer, &rect);
-            //  if (rect.x == px) px = rect.x;
-            //  if (rect.y == py) py = rect.y;
         }
     }
 }
