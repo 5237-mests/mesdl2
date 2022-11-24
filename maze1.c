@@ -75,9 +75,9 @@ void player(SDL_Renderer *renderer)
 {
 	SDL_Rect position;
 
-	if (SDL_KEYDOWN == e.type)
+	if (e.type == SDL_KEYDOWN)
 	{
-		if (SDLK_LEFT == e.key.keysym.sym)
+		if (e.key.keysym.sym == SDLK_LEFT)
 		{
 			pa -= 0.1;
 			if (pa < 0)
@@ -87,7 +87,7 @@ void player(SDL_Renderer *renderer)
 			pdx = cos(pa) * 50;
 			pdy = sin(pa) * 50;
 		}
-		else if (SDLK_RIGHT == e.key.keysym.sym)
+		else if (e.key.keysym.sym == SDLK_RIGHT)
 		{
 			pa += 0.1;
 			if (pa > 2 * PI)
@@ -97,12 +97,12 @@ void player(SDL_Renderer *renderer)
 			pdx = cos(pa) * 50;
 			pdy = sin(pa) * 50;
 		}
-		else if (SDLK_DOWN == e.key.keysym.sym)
+		else if (e.key.keysym.sym == SDLK_DOWN)
 		{
 			px -= pdx;
 			py -= pdy;
 		}
-		else if (SDLK_UP == e.key.keysym.sym)
+		else if (e.key.keysym.sym == SDLK_UP)
 		{
 			py += pdy;
 			px += pdx;
@@ -140,6 +140,11 @@ void player(SDL_Renderer *renderer)
 	SDL_RenderFillRect(renderer, &position);
 }
 
+/**
+ *loop: main loop executing the SDL2 window
+ *
+ */
+
 void loop(void)
 {
 	while (SDL_PollEvent(&e))
@@ -155,21 +160,21 @@ void loop(void)
 		done = 1;
 		return;
 	}
-	if (SDL_KEYDOWN == e.type)
+	if (e.type == SDL_KEYDOWN)
 	{
-		if (SDLK_LEFT == e.key.keysym.sym)
+		if (e.key.keysym.sym == SDLK_LEFT)
 		{
 			px -= 10;
 		}
-		else if (SDLK_RIGHT == e.key.keysym.sym)
+		else if (e.key.keysym.sym == SDLK_RIGHT)
 		{
 			px += 10;
 		}
-		else if (SDLK_DOWN == e.key.keysym.sym)
+		else if (e.key.keysym.sym == SDLK_DOWN)
 		{
 			py += 10;
 		}
-		else if (SDLK_UP == e.key.keysym.sym)
+		else if (e.key.keysym.sym == SDLK_UP)
 		{
 			py -= 10;
 		}
@@ -182,31 +187,46 @@ void loop(void)
 	SDL_UpdateWindowSurface(window);
 	}
 }
+/**
+ *main: main function of the program
+ *argc: input characters
+ *argv: array of input char
+ */
 
 int main(int argc, char *argv[])
 {
+	//SDL_Window *window;
 	SDL_Surface *surface;
 	/* Enable standard application logging */
 	SDL_LogSetPriority(SDL_LOG_CATEGORY_APPLICATION, SDL_LOG_PRIORITY_INFO);
 	/* Initialize SDL */
 	if (SDL_Init(SDL_INIT_VIDEO) != 0)
 	{
-		SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "SDL_Init fail : %s\n", SDL_GetError());
+		SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "SDLfail: %s\n", SDL_GetError());
 		return (1);
 	}
 
 	/* Create window and renderer for given surface */
-	window = SDL_CreateWindow("Maze", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, 512, 512, 0);
+	window = SDL_CreateWindow("Maze",
+			SDL_WINDOWPOS_UNDEFINED,
+			SDL_WINDOWPOS_UNDEFINED,
+			512,
+			512,
+			0);
 	if (!window)
 	{
-		SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "Window creation fail : %s\n", SDL_GetError());
+		SDL_LogError(SDL_LOG_CATEGORY_APPLICATION,
+				"Window creation fail : %s\n",
+				SDL_GetError());
 		return (1);
 	}
 	surface = SDL_GetWindowSurface(window);
 	renderer = SDL_CreateSoftwareRenderer(surface);
 	if (!renderer)
 	{
-		SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "Render creation for surface fail : %s\n", SDL_GetError());
+		SDL_LogError(SDL_LOG_CATEGORY_APPLICATION,
+				"Render creation for surface fail : %s\n",
+				SDL_GetError());
 		return (1);
 	}
 
