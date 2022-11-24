@@ -1,13 +1,15 @@
 #include <stdio.h>
+#include <math.h>
 #include "SDL2/SDL.h"
 #define mapWidth 16
 #define mapHeight 16
+#define PI 3.14159265359
 
 SDL_Window *window;
 SDL_Renderer *renderer;
 SDL_Event e;
 int done;
-float px = 300, py = 300;
+float px = 300, py = 300, pdx, pdy, pa=45; 
 
 int worldMap[mapWidth][mapHeight]=
 {
@@ -49,12 +51,14 @@ DrawWorld(SDL_Renderer * renderer)
               rect.h = 512/16;
               rect.x = x * rect.w;
               rect.y = row * rect.h;
-              
               SDL_RenderFillRect(renderer, &rect);
+                 if (rect.x == px) px = rect.x;
+                 if (rect.y == py) py = rect.y;              
+              
             }
         }
     }
-
+    //Grid
     SDL_SetRenderDrawColor(renderer, 100, 100, 100, SDL_ALPHA_OPAQUE);
         for (int i = 1; i <= 16; i++){
             int j = 32*i;
@@ -62,8 +66,11 @@ DrawWorld(SDL_Renderer * renderer)
             SDL_RenderDrawLine(renderer, j, 0, j,512);
             SDL_RenderDrawLine(renderer, 0, s, 512,s);
             SDL_RenderPresent(renderer);
-
         }
+    // //player positionLine
+    SDL_SetRenderDrawColor(renderer, 0, 255, 0, SDL_ALPHA_OPAQUE);
+    SDL_RenderDrawLine(renderer, px, py, px+pdx*80, py+pdy*80);
+    SDL_RenderPresent(renderer);  
 }
 
 void
@@ -73,25 +80,42 @@ player(SDL_Renderer * renderer){
   {  
       if (SDLK_LEFT == e.key.keysym.sym)
       {
-          px -= 10;
+        pa -= 0.1;
+        if(pa < 0){ pa += 2*PI;}
+        pdx = cos(pa) * 50;
+        pdy = sin(pa) * 50;
       }
       else if (SDLK_RIGHT == e.key.keysym.sym)
       {
-          px += 10;
+        pa += 0.1;
+        if(pa > 2*PI){ pa -= 2*PI;}
+        pdx = cos(pa) * 50;
+        pdy = sin(pa) * 50;
       }
       else if (SDLK_DOWN == e.key.keysym.sym)
       {
-          py += 10;
+        px -= pdx;
+        py -= pdy;
       }
       else if (SDLK_UP == e.key.keysym.sym)
       {
-          py -= 10;
+          py += pdy;
+          px += pdx;
       }
   }
-  if (px <= 32) px = 33;
-  if (py <= 32) py = 33;
-  if (px >= 472) px = 472;
-  if (py >= 472) py = 472;
+  int xo = floor(px/32);
+  int yo = floor(py/32);
+  if(worldMap[xo][yo] == 1){
+    px = px + 2;
+    py = py + 2;
+  } else {
+    ;
+  }
+//   if (px <= 32) px = 33;
+//   if (py <= 32) py = 33;
+//   if (px >= 472) px = 472;
+//   if (py >= 472) py = 472;
+//   if (rect.x == px )
   SDL_SetRenderDrawColor(renderer, 0, 0, 0, SDL_ALPHA_OPAQUE);SDL_RenderClear(renderer);
 
   SDL_SetRenderDrawColor(renderer, 0xFF, 0xFF, 0xFF, 0xFF);
@@ -101,6 +125,7 @@ player(SDL_Renderer * renderer){
    position.y = py;
 
   SDL_RenderFillRect(renderer, &position);
+  
 } 
 
 void
@@ -140,7 +165,7 @@ loop()
         //end
 
         DrawWorld(renderer);
-        // player(renderer);
+        //player(renderer);
 
 
     /* Got everything on rendering surface,
