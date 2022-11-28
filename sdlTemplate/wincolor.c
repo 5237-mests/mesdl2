@@ -32,7 +32,7 @@ int main(int argc, char* argv[])
                 
                 SDL_RenderClear(renderer);
 
-                SDL_SetRenderDrawColor(renderer, 0, 255, 0, SDL_ALPHA_OPAQUE);
+                SDL_SetRenderDrawColor(renderer, 255, 0, 0, SDL_ALPHA_OPAQUE);
 	        for (int z = 0; z < 640; z++ ){
 	        SDL_RenderDrawLine(renderer, z, 156, z, 256);
                 }
